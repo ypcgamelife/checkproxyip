@@ -47,8 +47,11 @@ try:
       typeList = selector.xpath('//td[4]/text()')
       #获取位置
       locationList = selector.xpath('//td[5]/text()')
-      for j in range(1,11):
-          print(str(j))
+      gs=len(ipList)
+      #print(gs)
+      for j in range(1,gs+1):
+          #print(str(j))
+
           myworksheet.write((page-1)*10+j, 0, ipList[j-1])
           myworksheet.write((page-1)*10+j, 1, portList[j-1])
           myworksheet.write((page-1)*10+j, 2, typeList[j-1])
@@ -56,29 +59,33 @@ try:
       #http: // www.ip3366.net / free /?stype = 1 & page = 1
       #page = 1
       # print("测试第"+str(page)+"页")
-      url = "http://www.ip3366.net/free/?stype=1&page=" + str(page)
-      headers = header()
-      sess = requests.Session()
-      html = sess.get(url, headers=headers).text
-      selector = etree.HTML(html)
-      # 获取ip
-      ipList = selector.xpath('//td[1]/text()')
-      # 获取端口号
-      portList = selector.xpath('//td[2]/text()')
-      # 获取ip类型
-      typeList = selector.xpath('//td[4]/text()')
-      # 获取位置
-      locationList = selector.xpath('//td[5]/text()')
-      for j in range(1,11):
-          #print('j='+str(j))
-          myworksheet.write((page-1)*10+j, 5, ipList[j-1])
-          myworksheet.write((page-1)*10+j, 6, portList[j-1])
-          myworksheet.write((page-1)*10+j, 7, typeList[j-1])
-          myworksheet.write((page-1)*10+j, 8, locationList[j-1])
-      #myworksheet.write(page+1, 0, ipList[0])
-      #myworksheet.write(page+1, 1, portList[0])
-      #myworksheet.write(page+1, 2, typeList[0])
-      #myworksheet.write(page+1, 3, locationList[0])
+      if page<=7:
+         url = "http://www.ip3366.net/free/?stype=1&page=" + str(page)
+         headers = header()
+         sess = requests.Session()
+         html = sess.get(url, headers=headers).text
+         selector = etree.HTML(html)
+         # 获取ip
+         ipList = selector.xpath('//td[1]/text()')
+         # 获取端口号
+         portList = selector.xpath('//td[2]/text()')
+         # 获取ip类型
+         typeList = selector.xpath('//td[4]/text()')
+         # 获取位置
+         #locationList = selector.xpath('//td[5]/text()')
+         gs = len(ipList)
+         #print(gs)
+         #print(html)
+         for j in range(1,gs+1):
+             #print('j='+str(j))
+             #print(ipList[j - 1])
+             #print(portList[j-1])
+             #print(typeList[j-1])
+             myworksheet.write((page-1)*15+j, 5, ipList[j-1])
+             myworksheet.write((page-1)*15+j, 6, portList[j-1])
+             myworksheet.write((page-1)*15+j, 7, typeList[j-1])
+             #print("玩吗")
+             #myworksheet.write((page-1)*10+j, 8, locationList[j-1])
     myworkbook.save('d:/takeip.xls')
 except:
     print("获取失败")
