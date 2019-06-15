@@ -20,7 +20,8 @@ maxrows=mysheet.nrows
 validproxy=0
 for i in range(1,maxrows):
     IP=mysheet.cell_value(i,0)
-    xy=mysheet.cell_value(i,1)
+    xy=mysheet.cell_value(i,1).lower()
+    print(xy)
     #requests.adapters.DEFAULT_RETRIES = 3
     #IP = random.choice(IPAgents)
     #thisProxy = "http://" + IP
@@ -42,8 +43,9 @@ for i in range(1,maxrows):
           print("代理IP:'"+ thisIP + "'有效！有效啦，有效啦，哈哈哈哈哈哈")
           validproxy=validproxy+1
           mynewworksheet.write(validproxy,0,thisProxy)
+          mynewworksheet.write(validproxy, 1, xy)
           #获取响应时间 0:00:00 0000 格式
-          mynewworksheet.write(validproxy,1,res.elapsed.total_seconds())
+          mynewworksheet.write(validproxy,2,res.elapsed.total_seconds())
        else:
           print("代理IP:"+thisIP+"无效！")
     except:
